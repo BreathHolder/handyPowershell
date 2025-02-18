@@ -1,0 +1,6 @@
+## Scripts & Descriptions
+
+| Name              | Description                                                                                                                                                                      | Variables                           | Prerequisites                                                 |
+| ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------- | ------------------------------------------------------------- |
+| FixResolution.ps1 | Resets the screen resolution on a Windows 11 machine. Used when I return to my PC from remote apps like Jump Desktop. Setup is for 2 monitors but it can be for 1 or more than 2 | width and height values {2560 1440} | ➡️ [NirSoft's NirCMD](https://www.nirsoft.net/utils/nircmd.html)<br />➡️ Windows 11 |
+| Windows11UpdateAndDriversChecker.ps1 | Checks to see if there are:<br />➡️ Errors Preventing Windows Updates<br />➡️ Windows Updates<br />➡️ Driver Updates | none | ➡️ Powershell 7.x<br />➡️ Windows 11
