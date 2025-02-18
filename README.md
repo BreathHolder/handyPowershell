@@ -24,6 +24,7 @@ Checks to see if there are:
 - PSWindowsUpdate module installed:
   ```powershell
   Install-Module -Name PSWindowsUpdate -Force
+- Windows 11
 
 ### 2. `FixResolution.ps1`
 **Description:**
@@ -33,5 +34,5 @@ Resets the screen resolution on a Windows 11 machine. Used when I return to my P
 - `$logPath` – Path for the log file (default is the user’s home directory).
 
 **Prerequisites:**
-➡️ [NirSoft's NirCMD](https://www.nirsoft.net/utils/nircmd.html)
-➡️ Windows 11
+- [NirSoft's NirCMD](https://www.nirsoft.net/utils/nircmd.html)
+- Windows 11
