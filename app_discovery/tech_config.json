@@ -18,9 +18,8 @@
             "C:\\Program Files (x86)\\Notepad++\\Notepad++.exe"
         ],
         "RegistryPaths": [
-            "HKLM:\\Software\\Notepad++\\Notepad++",
-            "HKLM:\\Software\\WOW6432Node\\Notepad++\\Notepad++",
-            "HKCU:\\Software\\Notepad++\\Notepad++"
+            "HKLM:\\Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Notepad++",
+            "HKLM:\\Software\\WOW6432Node\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Notepad++"
         ]
     }
 ]

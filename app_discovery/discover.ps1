@@ -43,6 +43,7 @@ foreach ($app in $appConfigs) {
         $appName = $app.AppName
         $installFound = @()
         $regFound = @()
+        $exeVersions = @()
         $lastAccessed = $null
 
         # Check Install Paths
@@ -51,8 +52,16 @@ foreach ($app in $appConfigs) {
                 if (Test-Path $path) {
                     $file = Get-Item $path -ErrorAction Stop
                     $installFound += $file.FullName
+
+                    # LastAccessedTime
                     if (-not $lastAccessed -or ($file.LastAccessTime -gt $lastAccessed)) {
                         $lastAccessed = $file.LastAccessTime
+                    }
+
+                    # EXE Version
+                    $version = $file.VersionInfo.ProductVersion
+                    if ($version) {
+                        $exeVersions += "$($file.FullName): $version"
                     }
                 }
             } catch {
@@ -80,6 +89,7 @@ foreach ($app in $appConfigs) {
             InstallPaths  = $installFound -join "; "
             RegistryPaths = $regFound -join "; "
             LastAccessed  = if ($lastAccessed) { $lastAccessed.ToString("s") } else { $null }
+            ExeVersions   = $exeVersions -join "; "
             Found         = (($installFound.Count -gt 0) -or ($regFound.Count -gt 0))
         }
 
