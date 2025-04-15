@@ -1,0 +1,26 @@
+[
+    {
+        "AppName": "Mozilla Firefox",
+        "InstallPaths": [
+            "C:\\Program Files\\Mozilla Firefox\\firefox.exe",
+            "C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe"
+        ],
+        "RegistryPaths": [
+            "HKLM:\\Software\\Mozilla\\Mozilla Firefox",
+            "HKLM:\\Software\\WOW6432Node\\Mozilla\\Mozilla Firefox",
+            "HKCU:\\Software\\Mozilla\\Mozilla Firefox"
+        ]
+    },
+    {
+        "AppName": "NotePad++",
+        "InstallPaths": [
+            "C:\\Program Files\\Notepad++\\Notepad++.exe",
+            "C:\\Program Files (x86)\\Notepad++\\Notepad++.exe"
+        ],
+        "RegistryPaths": [
+            "HKLM:\\Software\\Notepad++\\Notepad++",
+            "HKLM:\\Software\\WOW6432Node\\Notepad++\\Notepad++",
+            "HKCU:\\Software\\Notepad++\\Notepad++"
+        ]
+    }
+]

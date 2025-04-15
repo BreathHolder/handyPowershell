@@ -36,3 +36,20 @@ Resets the screen resolution on a Windows 11 machine. Used when I return to my P
 **Prerequisites:**
 - [NirSoft's NirCMD](https://www.nirsoft.net/utils/nircmd.html)
 - Windows 11
+
+###  3. `CheckAndStartJumpDesktop`
+
+**Description:**
+Script which checks for the `JumpConnect` service state. If it is started, it logs a message to say it is already running. If not, it starts the service. This script is designed to run as part of a scheduled task.
+
+**Variables:**
+Most of the variables we are going to set are within the new schedule task you will build. This is designed to work on Windows 10/11.
+
+- *Security Options:* 
+  - Select `Run whether user is logged on or not`
+  - Select `Run with highest privileges`
+- *Configure for:*
+  - Select `Windows 10`
+- *Triggers:* Select New Trigger
+
+**Prerequisites:**
