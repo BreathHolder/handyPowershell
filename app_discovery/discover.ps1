@@ -1,3 +1,4 @@
+[CmdletBinding()]
 param (
     [string]$ConfigFile = ".\tech_config.json",
     [string]$LogDir     = ".\logs"
@@ -42,6 +43,7 @@ function Log-Error {
     $errorEntry | ConvertTo-Json -Depth 3 | Add-Content -Path $errorFile
 }
 
+Write-Verbose "Loading Config File…"
 # Load config file
 try {
     if (-not (Test-Path $ConfigFile)) {
@@ -61,6 +63,7 @@ $discoveries  = @()
 # Define startTime for event lookup (last 24 hours)
 $startTime = (Get-Date).AddDays(-1)
 
+Write-Verbose "Pulling app info for each app in config file…"
 foreach ($app in $appConfigs) {
     try {
         $installFound = @()
@@ -69,6 +72,7 @@ foreach ($app in $appConfigs) {
         $lastRunTime  = $null
 
         # Check install paths
+        Write-Verbose "Checking installed paths…"
         foreach ($path in $app.InstallPaths) {
             try {
                 if (Test-Path $path) {
@@ -77,7 +81,7 @@ foreach ($app in $appConfigs) {
 
                     $ver = $file.VersionInfo.ProductVersion
                     if ($ver) {
-                        $exeVersions += "$($file.FullName): $ver"
+                        $exeVersions += $ver
                     }
                 }
             } catch {
@@ -86,6 +90,7 @@ foreach ($app in $appConfigs) {
         }
 
         # Check registry values if specified in config
+        Write-Verbose "Checking registry values…"
         $regEntries = @()
 
         if ($app.PSObject.Properties.Name -contains 'RegistryValueNames') {
@@ -128,6 +133,7 @@ foreach ($app in $appConfigs) {
         }
 
         # grouping reg entries by key path
+        Write-Verbose "Grouping registry entries…"
         $regEntries = $regEntries |
         Sort-Object KeyPath,ValueName,Tokens -Unique
 
@@ -149,6 +155,7 @@ foreach ($app in $appConfigs) {
         }
 
         # Lookup last run time via Security log
+        Write-Verbose "Checking last run time via Security log…"
         if ($exeFullPath) {
             try {
                 $evt = Get-WinEvent -FilterHashtable @{
@@ -171,6 +178,7 @@ foreach ($app in $appConfigs) {
         $found = ($installFound.Count -gt 0) -or ($regEntries.Count -gt 0)
 
         # Build per-app entry
+        Write-Verbose "Building app entry…"
         $appEntry = [PSCustomObject]@{
             AppName         = $app.AppName
             ExeVersions     = $exeVersions    -join "; "
@@ -188,6 +196,7 @@ foreach ($app in $appConfigs) {
 }
 
 # Build final report
+Write-Verbose "Building final report…"
 $report = [PSCustomObject]@{
     Timestamp    = (Get-Date).ToString("s")
     ComputerName = $computerName

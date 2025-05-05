@@ -43,6 +43,7 @@ This PowerShell script is designed to help technology owners in your organizatio
     "Apps":  [
                  {
                      "AppName":  "Mozilla Firefox",
+                     "ExeVersions":  "137.0.2",
                      "InstallPaths":  "C:\\Program Files\\Mozilla Firefox\\firefox.exe",
                      "RegistryEntries":  [
                                              {
@@ -59,6 +60,7 @@ This PowerShell script is designed to help technology owners in your organizatio
                  },
                  {
                      "AppName":  "NotePad++",
+                     "ExeVersions":  "8.6.5",
                      "InstallPaths":  "C:\\Program Files\\Notepad++\\Notepad++.exe",
                      "RegistryEntries":  {
                                              "KeyPath":  "HKLM:\\Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Notepad++",
@@ -67,7 +69,7 @@ This PowerShell script is designed to help technology owners in your organizatio
                                                             "@{ValueName=DisplayVersion; Tokens=8.6.5}"
                                                         ]
                                          },
-                     "LastRunTime":  "2025-05-05T14:19:36",
+                     "LastRunTime":  "2025-05-05T15:20:02",
                      "Found":  true
                  }
              ]
