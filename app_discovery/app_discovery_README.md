@@ -46,34 +46,27 @@ This PowerShell script is designed to help technology owners in your organizatio
                      "InstallPaths":  "C:\\Program Files\\Mozilla Firefox\\firefox.exe",
                      "RegistryEntries":  [
                                              {
-                                                 "KeyPath":  "HKLM:\\Software\\Mozilla\\Mozilla Firefox",
-                                                 "ValueName":  "CurrentVersion",
-                                                 "Tokens":  "137.0.2; (x64; en-US)"
+                                                 "KeyPath":  "HKCU:\\Software\\Mozilla\\Mozilla Firefox",
+                                                 "Values":  "@{ValueName=CurrentVersion; Tokens=137.0.2; (x64; en-US)}"
                                              },
                                              {
-                                                 "KeyPath":  "HKCU:\\Software\\Mozilla\\Mozilla Firefox",
-                                                 "ValueName":  "CurrentVersion",
-                                                 "Tokens":  "137.0.2; (x64; en-US)"
+                                                 "KeyPath":  "HKLM:\\Software\\Mozilla\\Mozilla Firefox",
+                                                 "Values":  "@{ValueName=CurrentVersion; Tokens=137.0.2; (x64; en-US)}"
                                              }
                                          ],
-                     "LastRunTime":  "2025-05-05T13:28:07",
+                     "LastRunTime":  "2025-05-05T14:48:59",
                      "Found":  true
                  },
                  {
                      "AppName":  "NotePad++",
                      "InstallPaths":  "C:\\Program Files\\Notepad++\\Notepad++.exe",
-                     "RegistryEntries":  [
-                                             {
-                                                 "KeyPath":  "HKLM:\\Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Notepad++",
-                                                 "ValueName":  "DisplayName",
-                                                 "Tokens":  "Notepad++; (64-bit; x64)"
-                                             },
-                                             {
-                                                 "KeyPath":  "HKLM:\\Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Notepad++",
-                                                 "ValueName":  "DisplayVersion",
-                                                 "Tokens":  "8.6.5"
-                                             }
-                                         ],
+                     "RegistryEntries":  {
+                                             "KeyPath":  "HKLM:\\Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Notepad++",
+                                             "Values":  [
+                                                            "@{ValueName=DisplayName; Tokens=Notepad++; (64-bit; x64)}",
+                                                            "@{ValueName=DisplayVersion; Tokens=8.6.5}"
+                                                        ]
+                                         },
                      "LastRunTime":  "2025-05-05T14:19:36",
                      "Found":  true
                  }
