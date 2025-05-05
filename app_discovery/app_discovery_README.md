@@ -123,9 +123,9 @@ All logs are written in JSON for easy Splunk/Logstash ingestion
 
 Fields include:
 - AppName
+- AppVersion
 - InstallPaths
-- RegistryPaths
-- ExeVersions
+- RegistryPaths & Values
 - LastAccessed
 - Found (boolean)
 
@@ -133,15 +133,13 @@ Fields include:
 
 ## 🔒 Notes
 
-- File LastAccessed may not always be available (depends on NTFS config)
-- Registry access may require elevated permissions
+- File LastAccessed may not always be available if the software hasn't been used since logging began. It needs to be used once since logging began to find the software
+- Running this script **absolutely requires** elevated privileges
 - Version detection works for EXEs with standard version metadata
-
 ---
 
 ## 🚀 Future Enhancements (Ideas)
 
 - Scan all user profiles' HKCU registry
-- 
 - Upload logs to central share or API
 - Email alerts on certain findings

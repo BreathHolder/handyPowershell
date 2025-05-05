@@ -64,6 +64,7 @@ $startTime = (Get-Date).AddDays(-1)
 foreach ($app in $appConfigs) {
     try {
         $installFound = @()
+        $exeVersions  = @() 
         $regEntries   = @()
         $lastRunTime  = $null
 
@@ -71,7 +72,13 @@ foreach ($app in $appConfigs) {
         foreach ($path in $app.InstallPaths) {
             try {
                 if (Test-Path $path) {
+                    $file = Get-Item $path -ErrorAction Stop
                     $installFound += (Get-Item $path -ErrorAction Stop).FullName
+
+                    $ver = $file.VersionInfo.ProductVersion
+                    if ($ver) {
+                        $exeVersions += "$($file.FullName): $ver"
+                    }
                 }
             } catch {
                 Log-Error -Context "InstallPath [$path] for $($app.AppName)" -ErrorObj $_
@@ -166,6 +173,7 @@ foreach ($app in $appConfigs) {
         # Build per-app entry
         $appEntry = [PSCustomObject]@{
             AppName         = $app.AppName
+            ExeVersions     = $exeVersions    -join "; "
             InstallPaths    = $installFound  -join "; "
             RegistryEntries = if ($grouped) { $grouped } else { $null }
             LastRunTime     = $lastRunTime
