@@ -37,15 +37,47 @@ This PowerShell script is designed to help technology owners in your organizatio
 
 ```json
 {
-  "Timestamp": "2025-04-14T12:17:43",
-  "ComputerName": "ACME-WS-1011",
-  "UserName": "bwilson",
-  "AppName": "NotePad++",
-  "InstallPaths": "C:\\Program Files\\Notepad++\\Notepad++.exe",
-  "RegistryPaths": "",
-  "LastAccessed": "2025-04-12T14:55:03",
-  "ExeVersions": "C:\\Program Files\\Notepad++\\Notepad++.exe: 8.6.3",
-  "Found": true
+    "Timestamp":  "2025-05-05T14:44:44",
+    "ComputerName":  "ACME-WS-1011",
+    "UserName":  "bwilson",
+    "Apps":  [
+                 {
+                     "AppName":  "Mozilla Firefox",
+                     "InstallPaths":  "C:\\Program Files\\Mozilla Firefox\\firefox.exe",
+                     "RegistryEntries":  [
+                                             {
+                                                 "KeyPath":  "HKLM:\\Software\\Mozilla\\Mozilla Firefox",
+                                                 "ValueName":  "CurrentVersion",
+                                                 "Tokens":  "137.0.2; (x64; en-US)"
+                                             },
+                                             {
+                                                 "KeyPath":  "HKCU:\\Software\\Mozilla\\Mozilla Firefox",
+                                                 "ValueName":  "CurrentVersion",
+                                                 "Tokens":  "137.0.2; (x64; en-US)"
+                                             }
+                                         ],
+                     "LastRunTime":  "2025-05-05T13:28:07",
+                     "Found":  true
+                 },
+                 {
+                     "AppName":  "NotePad++",
+                     "InstallPaths":  "C:\\Program Files\\Notepad++\\Notepad++.exe",
+                     "RegistryEntries":  [
+                                             {
+                                                 "KeyPath":  "HKLM:\\Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Notepad++",
+                                                 "ValueName":  "DisplayName",
+                                                 "Tokens":  "Notepad++; (64-bit; x64)"
+                                             },
+                                             {
+                                                 "KeyPath":  "HKLM:\\Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Notepad++",
+                                                 "ValueName":  "DisplayVersion",
+                                                 "Tokens":  "8.6.5"
+                                             }
+                                         ],
+                     "LastRunTime":  "2025-05-05T14:19:36",
+                     "Found":  true
+                 }
+             ]
 }
 ```
 
@@ -53,23 +85,27 @@ This PowerShell script is designed to help technology owners in your organizatio
 
 ## 🛠️ Setup Instructions
 
-1. Edit `tech_config.json` to define the applications you want to track. Here's a sample:
+1. Edit `tech_config.json` to define the applications you want to track. using `"RegistryValueNames": [ "*" ]` will return all registry value items. Here's a sample:
     ```json
     [
         {
             "AppName": "Mozilla Firefox",
             "InstallPaths": [
-            "C:\\Program Files\\Mozilla Firefox\\firefox.exe",
-            "C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe"
+                "C:\\Program Files\\Mozilla Firefox\\firefox.exe",
+                "C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe"
             ],
             "RegistryPaths": [
-            "HKLM:\\Software\\Mozilla\\Mozilla Firefox",
-            "HKLM:\\Software\\WOW6432Node\\Mozilla\\Mozilla Firefox",
-            "HKCU:\\Software\\Mozilla\\Mozilla Firefox"
+                "HKLM:\\Software\\Mozilla\\Mozilla Firefox",
+                "HKLM:\\Software\\WOW6432Node\\Mozilla\\Mozilla Firefox",
+                "HKCU:\\Software\\Mozilla\\Mozilla Firefox"
+            ],
+            "RegistryValueNames": [
+                "CurrentVersion"
             ]
         }
     ]
     ```
+
 2. Run the Script `.\discover.ps1`.
    - Optionally, you can provide a config path or log directory:
      ```powershell
@@ -113,6 +149,6 @@ Fields include:
 ## 🚀 Future Enhancements (Ideas)
 
 - Scan all user profiles' HKCU registry
-- Extract ProductName, CompanyName from EXEs
+- 
 - Upload logs to central share or API
 - Email alerts on certain findings

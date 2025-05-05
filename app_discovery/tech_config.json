@@ -9,6 +9,9 @@
             "HKLM:\\Software\\Mozilla\\Mozilla Firefox",
             "HKLM:\\Software\\WOW6432Node\\Mozilla\\Mozilla Firefox",
             "HKCU:\\Software\\Mozilla\\Mozilla Firefox"
+        ],
+        "RegistryValueNames": [
+            "CurrentVersion"
         ]
     },
     {
@@ -20,6 +23,10 @@
         "RegistryPaths": [
             "HKLM:\\Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Notepad++",
             "HKLM:\\Software\\WOW6432Node\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Notepad++"
+        ],
+        "RegistryValueNames": [
+            "DisplayName",
+            "DisplayVersion"
         ]
     }
 ]
