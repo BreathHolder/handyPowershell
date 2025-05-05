@@ -83,7 +83,7 @@ This PowerShell script is designed to help technology owners in your organizatio
 
 ## 🛠️ Setup Instructions
 
-1. Edit `tech_config.json` to define the applications you want to track. using `"RegistryValueNames": [ "*" ]` will return all registry value items. Here's a sample:
+1. Edit `tech_config.json` to define the applications you want to track. Using `"RegistryValueNames": [ "*" ]` will return all registry value items. Here's a sample:
     ```json
     [
         {
