@@ -31,6 +31,9 @@ This PowerShell script is designed to help technology owners in your organizatio
    - `logs/discovery_YYYYMMDD.log` (JSON format, Splunk-ready)
    - `logs/error_YYYYMMDD.log` (errors captured per app/path with context)
 
+4. **Logging in verbose mode** by:
+   - on the command line, run `.\discover.ps1 -Verbose`
+
 ---
 
 ## 🧪 Sample Entry (discovery log)
