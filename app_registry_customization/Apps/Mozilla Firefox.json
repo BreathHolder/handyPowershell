@@ -1,0 +1,18 @@
+{
+    "AppName": "Mozilla Firefox",
+    "CustomRegistry": [
+        {
+            "Path": [
+                "HKLM:\\Software\\Mozilla\\Mozilla Firefox",
+                "HKCU:\\Software\\Mozilla\\Mozilla Firefox"
+            ],
+            "Entries": {
+                "Acme_Inc_GFS_SW_Bool": 1,
+                "Acme_Inc_GFS_SW_Contract": "Rabbit Season",
+                "Acme_Inc_SW_Index_Value": 1200,
+                "Acme_Inc_SW_Tech_Owner": "Elmer Fudd",
+                "Acme_Inc_SW_Prim_Manager": "Daffy Duck"
+            }
+        }
+    ]
+}

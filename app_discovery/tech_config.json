@@ -11,7 +11,11 @@
             "HKCU:\\Software\\Mozilla\\Mozilla Firefox"
         ],
         "RegistryValueNames": [
-            "CurrentVersion"
+            "Acme_Inc_GFS_SW_Bool",
+            "Acme_Inc_GFS_SW_Contract",
+            "Acme_Inc_SW_Index_Value",
+            "Acme_Inc_SW_Tech_Owner",
+            "Acme_Inc_SW_Prim_Manager"
         ]
     },
     {
