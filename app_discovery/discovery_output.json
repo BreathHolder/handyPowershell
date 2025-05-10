@@ -1,0 +1,38 @@
+﻿{
+    "Timestamp":  "2025-05-10T17:11:29",
+    "ComputerName":  "DESKTOP-61M053T",
+    "UserName":  "Matty",
+    "Apps":  [
+                 {
+                     "AppName":  "Mozilla Firefox",
+                     "ExeVersions":  "138.0.1",
+                     "InstallPaths":  "C:\\Program Files\\Mozilla Firefox\\firefox.exe",
+                     "RegistryEntries":  [
+                                             {
+                                                 "KeyPath":  "HKCU:\\Software\\Mozilla\\Mozilla Firefox",
+                                                 "Values":  "      "
+                                             },
+                                             {
+                                                 "KeyPath":  "HKLM:\\Software\\Mozilla\\Mozilla Firefox",
+                                                 "Values":  "      "
+                                             }
+                                         ],
+                     "LastRunTime":  null,
+                     "Found":  true
+                 },
+                 {
+                     "AppName":  "NotePad++",
+                     "ExeVersions":  "",
+                     "InstallPaths":  "",
+                     "RegistryEntries":  {
+                                             "KeyPath":  "HKLM:\\Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Notepad++",
+                                             "Values":  [
+                                                            "@{ValueName=DisplayName; Tokens=Notepad++ (64-bit x64); Notepad++; (64-bit; x64)}",
+                                                            "@{ValueName=DisplayVersion; Tokens=8.8.1}"
+                                                        ]
+                                         },
+                     "LastRunTime":  null,
+                     "Found":  true
+                 }
+             ]
+}

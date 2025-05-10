@@ -7,22 +7,15 @@
         ],
         "RegistryPaths": [
             "HKLM:\\Software\\Mozilla\\Mozilla Firefox",
-            "HKLM:\\Software\\WOW6432Node\\Mozilla\\Mozilla Firefox",
             "HKCU:\\Software\\Mozilla\\Mozilla Firefox"
         ],
-        "RegistryValueNames": [
-            "Acme_Inc_GFS_SW_Bool",
-            "Acme_Inc_GFS_SW_Contract",
-            "Acme_Inc_SW_Index_Value",
-            "Acme_Inc_SW_Tech_Owner",
-            "Acme_Inc_SW_Prim_Manager"
-        ]
+        "RegistryValueNames": ["*"]
     },
     {
         "AppName": "NotePad++",
         "InstallPaths": [
-            "C:\\Program Files\\Notepad++\\Notepad++.exe",
-            "C:\\Program Files (x86)\\Notepad++\\Notepad++.exe"
+            "F:\\Program Files\\Notepad++\\Notepad++.exe",
+            "F:\\Program Files (x86)\\Notepad++\\Notepad++.exe"
         ],
         "RegistryPaths": [
             "HKLM:\\Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Notepad++",
