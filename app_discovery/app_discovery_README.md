@@ -1,6 +1,6 @@
 # 🔍 PowerShell Application Discovery Script
 
-This PowerShell script is designed to help technology owners in your organization discover the presence and details of installed applications across company workstations. It reads from a centralized configuration file, performs local discovery using file system and registry data, and logs structured output for ingestion by platforms like **Splunk**.
+This PowerShell script is designed to help technology owners in your organization discover the presence and details of installed applications across company workstations. It reads from a centralized configuration file, performs local discovery using data on the file system as well as registry data to build structured, human-readable CSV reports and error logs.
 
 ---
 
@@ -11,140 +11,110 @@ This PowerShell script is designed to help technology owners in your organizatio
 ├── discover.ps1                # Main PowerShell app
 ├── tech_config.json            # Config file with apps, paths, registry entries
 └── logs\
-    └── discovery_YYYYMMDD.log  # Log file for Splunk ingestion
+    └── discovery_YYYYMMDD.csv  # CSV file for System Ingest
 ```
 
 ---
 
 ## ⚙️ How It Works
 
-1. **Reads from** `tech_config.json` for:
+1. **Loads** `tech_config.json` containing:
    - App name
-   - One or more installation path candidates
-   - One or more registry key paths
+   - EXE path candidates
+   - Registry paths to check
+   - Optional registry value names to look for
 
-2. **Scans local machine** for:
-   - Installed EXEs
-   - Registry entries in both `HKLM` and `HKCU`
+2. **Scans** the local system:
+   - Verifies EXE paths exist
+   - Pulls matching registry values from `HKLM` and `HKCU`
+   - Uses `DisplayVersion` or `CurrentVersion` as the primary version identifier
+   - Optionally checks the Event Log for last-run info (`Event ID 4688`)
 
-3. **Logs structured discovery results** to:
-   - `logs/discovery_YYYYMMDD.log` (JSON format, Splunk-ready)
-   - `logs/error_YYYYMMDD.log` (errors captured per app/path with context)
-
-4. **Logging in verbose mode** by:
-   - on the command line, run `.\discover.ps1 -Verbose`
+3. **Outputs results** to:
+   - `discovery_apps_YYYYMMDD.csv` for easy review or ingestion into Excel, Splunk, etc.
+   - `error_YYYYMMDD.log` if any paths or registry reads fail
+   - `warnings_YYYYMMDD.log` if `Get-WinEvent` hits a limit (default max is 1000 events)
 
 ---
 
-## 🧪 Sample Entry (discovery log)
+## 🧪 Sample Output (CSV)
 
-```json
-{
-    "Timestamp":  "2025-05-05T14:44:44",
-    "ComputerName":  "ACME-WS-1011",
-    "UserName":  "bwilson",
-    "Apps":  [
-                 {
-                     "AppName":  "Mozilla Firefox",
-                     "ExeVersions":  "137.0.2",
-                     "InstallPaths":  "C:\\Program Files\\Mozilla Firefox\\firefox.exe",
-                     "RegistryEntries":  [
-                                             {
-                                                 "KeyPath":  "HKCU:\\Software\\Mozilla\\Mozilla Firefox",
-                                                 "Values":  "@{ValueName=CurrentVersion; Tokens=137.0.2; (x64; en-US)}"
-                                             },
-                                             {
-                                                 "KeyPath":  "HKLM:\\Software\\Mozilla\\Mozilla Firefox",
-                                                 "Values":  "@{ValueName=CurrentVersion; Tokens=137.0.2; (x64; en-US)}"
-                                             }
-                                         ],
-                     "LastRunTime":  "2025-05-05T14:48:59",
-                     "Found":  true
-                 },
-                 {
-                     "AppName":  "NotePad++",
-                     "ExeVersions":  "8.6.5",
-                     "InstallPaths":  "C:\\Program Files\\Notepad++\\Notepad++.exe",
-                     "RegistryEntries":  {
-                                             "KeyPath":  "HKLM:\\Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Notepad++",
-                                             "Values":  [
-                                                            "@{ValueName=DisplayName; Tokens=Notepad++; (64-bit; x64)}",
-                                                            "@{ValueName=DisplayVersion; Tokens=8.6.5}"
-                                                        ]
-                                         },
-                     "LastRunTime":  "2025-05-05T15:20:02",
-                     "Found":  true
-                 }
-             ]
-}
-```
+| AppName         | AppVersion             | InstallPaths                                  | LastRunTime         | Found | RegistrySummary                                                                                                  |
+|-----------------|------------------------|-----------------------------------------------|----------------------|--------|------------------------------------------------------------------------------------------------------------------|
+| Mozilla Firefox | 138.0.1 (x64 en-US)    | C:\Program Files\Mozilla Firefox\firefox.exe  | 2025-05-10T17:44:09  | True   | CurrentVersion=138.0.1 (x64 en-US); 138.0.1; (x64; en-US) \| Acme_Inc_SW_Tech_Owner=Elmer Fudd \| ...          |
+| Notepad++       | 8.8.1                  | F:\Program Files\Notepad++\Notepad++.exe      | 2025-05-10T17:28:31  | True   | DisplayVersion=8.8.1 \| DisplayName=Notepad++ (64-bit x64); Notepad++; (64-bit; x64)                            |
 
 ---
 
 ## 🛠️ Setup Instructions
 
-1. Edit `tech_config.json` to define the applications you want to track. Using `"RegistryValueNames": [ "*" ]` will return all registry value items. Here's a sample:
+1. **Edit `tech_config.json`** to define applications. Example:
     ```json
     [
         {
             "AppName": "Mozilla Firefox",
             "InstallPaths": [
-                "C:\\Program Files\\Mozilla Firefox\\firefox.exe",
-                "C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe"
+                "C:\\Program Files\\Mozilla Firefox\\firefox.exe"
             ],
             "RegistryPaths": [
                 "HKLM:\\Software\\Mozilla\\Mozilla Firefox",
-                "HKLM:\\Software\\WOW6432Node\\Mozilla\\Mozilla Firefox",
                 "HKCU:\\Software\\Mozilla\\Mozilla Firefox"
             ],
-            "RegistryValueNames": [
-                "CurrentVersion"
-            ]
+            "RegistryValueNames": [ "*" ]
         }
     ]
     ```
 
-2. Run the Script `.\discover.ps1`.
-   - Optionally, you can provide a config path or log directory:
-     ```powershell
-     .\discover.ps1 -ConfigFile ".\my_config.json" -LogDir "C:\MyLogs"
-     ```
+2. **Run the script**:
+    ```powershell
+    .\discover.ps1 -EnableEventScan
+    ```
+
+    Optional:
+    ```powershell
+    .\discover.ps1 -ConfigFile ".\alternate_config.json" -LogDir "C:\Logs"
+    ```
 
 ---
 
-## 🧯 Error Logging
+## ⚠️ Event Log Notes
 
-All errors are logged to logs/error_YYYYMMDD.log with:
-- Timestamp
-- Context of error (which app/path)
-- Error message
-- Stack trace (if available)
+- If `-EnableEventScan` is set, the script checks for recent `Event ID 4688` entries in the Security log.
+- By default, it searches the **last hour** and limits results to **1000 events**.
+- If the max is hit, a warning is logged to `warnings_YYYYMMDD.log`.
 
 ---
 
-## ✅ Output Formats
+## 📤 Output Summary
 
-All logs are written in JSON for easy Splunk/Logstash ingestion
-
-Fields include:
-- AppName
-- AppVersion
-- InstallPaths
-- RegistryPaths & Values
-- LastAccessed
-- Found (boolean)
+- **CSV Report**: One row per app
+- **AppVersion**: Pulled from registry (`DisplayVersion` or `CurrentVersion`) or EXE fallback
+- **RegistrySummary**: All matching values (name=value) from the specified keys
+- **InstallPaths**: First matched EXE path
+- **LastRunTime**: Most recent matching Security log entry (if enabled)
 
 ---
 
-## 🔒 Notes
+## ❌ Error Logging
 
-- File LastAccessed may not always be available if the software hasn't been used since logging began. It needs to be used once since logging began to find the software
-- Running this script **absolutely requires** elevated privileges
-- Version detection works for EXEs with standard version metadata
+All script exceptions are captured in `error_YYYYMMDD.log`, including:
+- Registry access errors
+- Missing EXEs
+- Script bugs or misconfigured inputs
+
 ---
 
-## 🚀 Future Enhancements (Ideas)
+## 🔒 Requirements
 
-- Scan all user profiles' HKCU registry
-- Upload logs to central share or API
-- Email alerts on certain findings
+- Must be run with **elevated privileges**
+- Requires access to the Windows Security event log
+- Works best with PowerShell 7+
+
+---
+
+## 🚀 Ideas for Future Enhancements
+
+- [ ] Support for checking `UninstallString` values
+- [ ] Scan all user profiles for HKCU keys
+- [ ] Compare results with a baseline and report deltas
+- [ ] Inclusion in automated system and data collection tool to trend in the long term
